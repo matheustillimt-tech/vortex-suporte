@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Identidade visual: fundo escuro neutro + UMA cor de marca (--primary).
+ * Trocar a cor: NEXT_PUBLIC_BRAND_COLOR (painel e telas de login) e
+ * Widget > Configurações > Cor da marca (widget e botão flutuante).
+ */
+
+@layer base {
+  :root {
+    /* Tema escuro por padrão. A cor principal (--primary/--ring/--brand) é
+       sobrescrita pela marca: NEXT_PUBLIC_BRAND_COLOR (src/app/layout.tsx) e,
+       dentro do widget, pela "Cor da marca" do painel. */
+    --background: 0 0% 4%;            /* #0a0a0a */
+    --foreground: 0 0% 98%;
+    --card: 0 0% 6.5%;                /* #111 */
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 263 70% 58%;           /* #7c3aed — cor padrão da marca */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 11%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 62%;
+
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 263 70% 58%;
+
+    --radius: 0.75rem;
+
+    --brand: 263 70% 58%;
+  }
+
+  /* Light é apenas pra o widget, opcional */
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --primary: 263 70% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 94%;
+    --accent-foreground: 222 47% 11%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 263 70% 58%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html, body { height: 100%; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+  }
+}
+
+/* Scrollbar */
+.scroll-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+.scroll-thin::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.25); border-radius: 9999px; }
+.scroll-thin::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.5); }
+
+/* Gradiente na cor da marca */
+.brand-gradient {
+  background-image: linear-gradient(135deg, hsl(var(--primary) / 0.8) 0%, hsl(var(--primary)) 100%);
+}
+.brand-gradient-text {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.7));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Glow sutil no botão primário */
+.glow-primary {
+  box-shadow: 0 0 0 1px hsl(var(--primary) / 0.4), 0 8px 24px -8px hsl(var(--primary) / 0.45);
+}
+
+/* Auth pages — fundo com brilho */
+.auth-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -20%, hsl(var(--primary) / 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, hsl(var(--primary) / 0.10), transparent 60%),
+    hsl(var(--background));
+}
+
+/* ====================================================================
+ * Tema do painel do atendente (escuro, aplicado SÓ ao dashboard)
+ *   Sidebar:   #111b21
+ *   Hover:     #202c33
+ *   Chat bg:   #0b141a + textura leve
+ *   Enviadas:  cor da marca misturada ao fundo
+ *   Recebidas: #202c33
+ *   Texto:     #e9edef (principal) / #b1bcc2 (secundário, alto contraste)
+ * ==================================================================== */
+.panel-theme {
+  --background: 202 34% 8%;          /* #0b141a */
+  --foreground: 200 16% 96%;         /* #e9edef - texto principal mais branco */
+  --card: 200 24% 10%;               /* #111b21 - sidebar */
+  --card-foreground: 200 16% 96%;
+  --popover: 200 24% 13%;
+  --popover-foreground: 200 16% 96%;
+
+  --primary: var(--brand);          /* cor da marca */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 200 16% 17%;          /* #202c33 - hover/active */
+  --secondary-foreground: 200 16% 96%;
+
+  --muted: 200 16% 17%;
+  --muted-foreground: 200 12% 75%;   /* #b1bcc2 - +contraste pra texto secundário */
+
+  --accent: 200 16% 17%;
+  --accent-foreground: 200 16% 96%;
+
+  --destructive: 0 70% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 200 14% 18%;
+  --input: 200 16% 17%;
+  --ring: var(--brand);
+
+  --bubble-incoming: 200 16% 17%;    /* #202c33 */
+  --panel-divider:  200 14% 18%;
+}
+
+/* Texto base do painel — corpo um pouco maior pra legibilidade */
+.panel-theme {
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+
+/* Fundo do chat com textura leve */
+.chat-bg {
+  background-color: hsl(var(--background));
+  background-image:
+    radial-gradient(hsl(var(--primary) / 0.04) 1px, transparent 1px),
+    radial-gradient(hsl(0 0% 100% / 0.015) 1px, transparent 1px);
+  background-size: 18px 18px, 6px 6px;
+  background-position: 0 0, 9px 9px;
+}
+
+.bubble-out {
+  background: hsl(var(--primary) / 0.35);
+  background: color-mix(in srgb, hsl(var(--primary)) 38%, hsl(var(--background)));
+  color: #e9edef;
+  border-radius: 8px 8px 2px 8px;
+}
+.bubble-in {
+  background: hsl(var(--bubble-incoming));
+  color: #e9edef;
+  border-radius: 8px 8px 8px 2px;
+}

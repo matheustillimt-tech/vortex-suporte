@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo — Widget Vórtex Suporte</title>
+    <style>
+      body { font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 40px; background: #f4f4f5; color: #18181b; }
+      main { max-width: 720px; margin: 0 auto; }
+      h1 { font-size: 24px; margin-bottom: 8px; }
+      p  { color: #52525b; line-height: 1.5; }
+      .card { background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.05); margin-top: 16px; }
+      label { display: block; font-size: 12px; text-transform: uppercase; color: #71717a; margin: 12px 0 4px; }
+      input { width: 100%; padding: 8px 12px; border: 1px solid #e4e4e7; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+      button { margin-top: 16px; padding: 8px 16px; background: #4f46e5; color: #fff; border: 0; border-radius: 6px; cursor: pointer; }
+      button:hover { background: #4338ca; }
+      code { background: #f4f4f5; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Demo do widget Vórtex Suporte</h1>
+      <p>
+        Esta página simula o seu site com o widget instalado. Preencha os dados de identificação e o
+        botão flutuante vai aparecer no canto. Clique para abrir o chat.
+      </p>
+
+      <div class="card">
+        <label for="email">E-mail (obrigatório)</label>
+        <input id="email" type="email" value="cliente.demo@exemplo.com" />
+
+        <label for="name">Nome</label>
+        <input id="name" type="text" value="Cliente Demo" />
+
+        <label for="uid">External ID (opcional)</label>
+        <input id="uid" type="text" value="demo_001" />
+
+        <label for="plan">Plano</label>
+        <input id="plan" type="text" value="pro" />
+
+        <button id="apply">Aplicar identidade</button>
+        <button id="reset" style="background: #71717a; margin-left: 8px;">Resetar</button>
+      </div>
+
+      <p style="font-size:12px; margin-top: 12px;">
+        Em produção, o seu site chama <code>VortexSuporte.identify(...)</code> automaticamente
+        logo após o login do cliente.
+      </p>
+    </main>
+
+    <!-- Widget SDK -->
+    <script
+      src="http://localhost:3000/widget.js"
+      data-project="principal"
+      data-host="http://localhost:3000"
+    ></script>
+    <script>
+      function applyIdentity() {
+        const payload = {
+          email: document.getElementById('email').value,
+          name:  document.getElementById('name').value,
+          userId: document.getElementById('uid').value || null,
+          metadata: { plano: document.getElementById('plan').value || undefined },
+        };
+        window.VortexSuporte.identify(payload);
+      }
+      document.getElementById('apply').addEventListener('click', applyIdentity);
+      document.getElementById('reset').addEventListener('click', () => {
+        window.VortexSuporte.reset();
+      });
+      // identifica automaticamente ao abrir
+      window.addEventListener('load', applyIdentity);
+    </script>
+  </body>
+</html>

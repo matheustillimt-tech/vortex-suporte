@@ -1,0 +1,4 @@
+# Configuração da CLI do Supabase para este projeto.
+# project_id aqui é só um nome local (não é o id do seu projeto no Supabase:
+# esse fica guardado pelo `supabase link`).
+project_id = "vortex-suporte"

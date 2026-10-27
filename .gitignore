@@ -1,0 +1,25 @@
+# dependências e build
+node_modules
+.next
+out
+dist
+*.tsbuildinfo
+next-env.d.ts
+
+# widget gerado no build (npm run build:widget)
+public/widget.js
+public/widget.js.map
+
+# variáveis de ambiente (nunca versionar; o .env.example fica)
+.env
+.env.*
+!.env.example
+
+# Vercel e Supabase CLI
+.vercel
+supabase/.temp
+supabase/.branches
+
+# sistema e logs
+.DS_Store
+*.log
